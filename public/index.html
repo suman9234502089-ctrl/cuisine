@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GustoSphere | Heritage, Cuisine & Age-Adaptive Dining Explorer</title>
+  <meta name="description" content="Discover and scroll through exquisite dining options categorized by culinary tradition, world cuisine, and age demographics. Powered by high-performance C++ backend.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient background glow effects -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+
+  <!-- Main Navigation Header -->
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <div class="brand-group">
+        <a href="#hero" class="brand-logo" id="brand-logo-link">
+          <span class="logo-mark">✧</span>
+          <div class="logo-text">
+            <span class="logo-primary">GustoSphere</span>
+            <span class="logo-tagline">Tradition · Cuisine · Demographics</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="header-search-wrap">
+        <div class="search-bar" id="search-bar-container">
+          <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="global-search-input" placeholder="Search by cuisine, dish, tradition, or city quarter..." aria-label="Search dining options">
+          <span class="search-shortcut" title="Press '/' to search">/</span>
+          <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="Clear search text">&times;</button>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="engine-badge" id="engine-badge" title="High performance C++ POSIX socket backend server">
+          <span class="pulse-dot"></span>
+          <span class="engine-text">C++ Core Active</span>
+        </div>
+        <button class="saved-counter-btn" id="saved-counter-btn" aria-label="View saved places">
+          <span class="heart-icon">♥</span>
+          <span class="saved-count-pill" id="saved-count-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section" id="hero">
+      <div class="hero-content">
+        <div class="hero-pill-badge">
+          <span class="sparkle">✦</span> Curated Multi-Generational Culinary Atlas
+        </div>
+        <h1 class="hero-headline">
+          Dining Curated by <span class="gradient-text">Heritage, Cuisine</span> & <span class="gradient-text-alt">Age Harmony</span>
+        </h1>
+        <p class="hero-subtext">
+          Explore world dining options structured across ancestral traditions, authentic cultural cuisines, and tailored demographic comfort—from playful family pasta parlors to candlelit sanctuaries and elder-friendly banquet halls.
+        </p>
+
+        <!-- Stats strip -->
+        <div class="hero-metrics-strip" id="hero-metrics">
+          <div class="metric-card">
+            <span class="metric-number" id="stat-total-restaurants">16</span>
+            <span class="metric-label">Sanctuaries</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-card">
+            <span class="metric-number">4</span>
+            <span class="metric-label">Tradition Pillars</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-card">
+            <span class="metric-number">8</span>
+            <span class="metric-label">Global Cuisines</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-card">
+            <span class="metric-number">5</span>
+            <span class="metric-label">Age Groups</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Tri-Pillar Filter Dashboard -->
+    <section class="filter-dashboard-section" id="filter-dashboard">
+      <div class="dashboard-wrapper">
+        <div class="dashboard-header">
+          <div class="section-title-wrap">
+            <span class="section-subtitle">Adaptive Discovery Engine</span>
+            <h2 class="section-title">Filter by Tradition, Cuisine & Age Group</h2>
+          </div>
+          <button id="reset-all-filters-btn" class="reset-filters-btn" title="Reset all active selections">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+            Reset Filters
+          </button>
+        </div>
+
+        <!-- Pillar 1: Tradition Filter -->
+        <div class="filter-pillar-block" id="tradition-pillar">
+          <div class="pillar-label-group">
+            <span class="pillar-icon">🏮</span>
+            <span class="pillar-title">1. Culinary Tradition & Heritage</span>
+            <span class="pillar-desc">How food is conceived, honored, and crafted</span>
+          </div>
+          <div class="pills-scroll-track" id="tradition-filter-track" role="radiogroup" aria-label="Filter by tradition">
+            <button class="filter-pill active" data-filter-type="tradition" data-value="all" id="tradition-btn-all" role="radio" aria-checked="true">
+              <span class="pill-dot"></span> All Traditions
+            </button>
+            <button class="filter-pill" data-filter-type="tradition" data-value="ancestral" id="tradition-btn-ancestral" role="radio" aria-checked="false">
+              <span class="pill-symbol">🏮</span> Ancestral Heritage
+              <span class="pill-info-tooltip">Multi-generation recipes, hearth cooking & ancient rituals</span>
+            </button>
+            <button class="filter-pill" data-filter-type="tradition" data-value="contemporary" id="tradition-btn-contemporary" role="radio" aria-checked="false">
+              <span class="pill-symbol">✨</span> Contemporary Fusion
+              <span class="pill-info-tooltip">Modern culinary chemistry, avant-garde pairing</span>
+            </button>
+            <button class="filter-pill" data-filter-type="tradition" data-value="street_food" id="tradition-btn-street" role="radio" aria-checked="false">
+              <span class="pill-symbol">🔥</span> Street Food & Night Market
+              <span class="pill-info-tooltip">Binchotan grills, high-energy counter dining & bazaar spices</span>
+            </button>
+            <button class="filter-pill" data-filter-type="tradition" data-value="ceremonial" id="tradition-btn-ceremonial" role="radio" aria-checked="false">
+              <span class="pill-symbol">👑</span> Ceremonial & Feasts
+              <span class="pill-info-tooltip">Dastarkhwan thalis, Levantine mezze tables & grand banquets</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pillar 2: Cuisine Filter -->
+        <div class="filter-pillar-block" id="cuisine-pillar">
+          <div class="pillar-label-group">
+            <span class="pillar-icon">🌍</span>
+            <span class="pillar-title">2. World Cuisine Origins</span>
+            <span class="pillar-desc">Regional flavor palettes and indigenous ingredients</span>
+          </div>
+          <div class="pills-scroll-track" id="cuisine-filter-track" role="radiogroup" aria-label="Filter by cuisine">
+            <button class="filter-pill active" data-filter-type="cuisine" data-value="all" id="cuisine-btn-all" role="radio" aria-checked="true">
+              All Cuisines
+            </button>
+            <button class="filter-pill" data-filter-type="cuisine" data-value="japanese" id="cuisine-btn-japanese" role="radio" aria-checked="false">
+              🍱 Japanese
+            </button>
+            <button class="filter-pill" data-filter-type="cuisine" data-value="italian" id="cuisine-btn-italian" role="radio" aria-checked="false">
+              🍝 Italian
+            </button>
+            <button class="filter-pill" data-filter-type="cuisine" data-value="indian" id="cuisine-btn-indian" role="radio" aria-checked="false">
+              🍛 Indian
+            </button>
+            <button class="filter-pill" data-filter-type="cuisine" data-value="mexican" id="cuisine-btn-mexican" role="radio" aria-checked="false">
+              🌮 Mexican
+            </button>
+            <button class="filter-pill" data-filter-type="cuisine" data-value="mediterranean" id="cuisine-btn-mediterranean" role="radio" aria-checked="false">
+              🫒 Mediterranean
+            </button>
+            <button class="filter-pill" data-filter-type="cuisine" data-value="french" id="cuisine-btn-french" role="radio" aria-checked="false">
+              🥐 French
+            </button>
+            <button class="filter-pill" data-filter-type="cuisine" data-value="asian" id="cuisine-btn-asian" role="radio" aria-checked="false">
+              🥟 Pan-Asian
+            </button>
+            <button class="filter-pill" data-filter-type="cuisine" data-value="thai" id="cuisine-btn-thai" role="radio" aria-checked="false">
+              🍜 Thai
+            </button>
+            <button class="filter-pill" data-filter-type="cuisine" data-value="spanish" id="cuisine-btn-spanish" role="radio" aria-checked="false">
+              🥘 Spanish
+            </button>
+          </div>
+        </div>
+
+        <!-- Pillar 3: Age Demographic Optimization -->
+        <div class="filter-pillar-block" id="age-group-pillar">
+          <div class="pillar-label-group">
+            <span class="pillar-icon">👥</span>
+            <span class="pillar-title">3. Age Group & Dining Vibe</span>
+            <span class="pillar-desc">Ambiance, seating ergonomics, noise levels & hospitality warmth</span>
+          </div>
+          <div class="age-cards-grid" id="age-filter-track" role="radiogroup" aria-label="Filter by age group">
+            <button class="age-card-btn active" data-filter-type="age_group" data-value="all" id="age-btn-all" role="radio" aria-checked="true">
+              <span class="age-avatar">✨</span>
+              <div class="age-meta">
+                <strong class="age-name">All Demographics</strong>
+                <span class="age-hint">Show all dining options</span>
+              </div>
+            </button>
+
+            <button class="age-card-btn" data-filter-type="age_group" data-value="families" id="age-btn-families" role="radio" aria-checked="false">
+              <span class="age-avatar">👨‍👩‍👧‍👦</span>
+              <div class="age-meta">
+                <strong class="age-name">Kids & Families</strong>
+                <span class="age-hint">High chairs, pasta workshops, gentle spices</span>
+              </div>
+            </button>
+
+            <button class="age-card-btn" data-filter-type="age_group" data-value="young_adults" id="age-btn-young_adults" role="radio" aria-checked="false">
+              <span class="age-avatar">🍸</span>
+              <div class="age-meta">
+                <strong class="age-name">Young Adults (18-35)</strong>
+                <span class="age-hint">Vinyl DJ sets, craft mezcal, lively social energy</span>
+              </div>
+            </button>
+
+            <button class="age-card-btn" data-filter-type="age_group" data-value="romantic" id="age-btn-romantic" role="radio" aria-checked="false">
+              <span class="age-avatar">🕯️</span>
+              <div class="age-meta">
+                <strong class="age-name">Romantic Couples</strong>
+                <span class="age-hint">Candlelit booths, wine pairing, quiet intimacy</span>
+              </div>
+            </button>
+
+            <button class="age-card-btn" data-filter-type="age_group" data-value="seniors" id="age-btn-seniors" role="radio" aria-checked="false">
+              <span class="age-avatar">🍵</span>
+              <div class="age-meta">
+                <strong class="age-name">Seniors & Multi-Gen</strong>
+                <span class="age-hint">Soft acoustic rooms, velvet seating, heritage tea</span>
+              </div>
+            </button>
+
+            <button class="age-card-btn" data-filter-type="age_group" data-value="all_ages" id="age-btn-all_ages" role="radio" aria-checked="false">
+              <span class="age-avatar">🫒</span>
+              <div class="age-meta">
+                <strong class="age-name">All Ages Welcome</strong>
+                <span class="age-hint">Spacious verandas, large round tables & sharing</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Control & Display Section -->
+    <section class="results-container-section" id="dining-results">
+      <div class="results-header-bar">
+        <div class="results-summary">
+          <span class="results-count-number" id="visible-count-text">16</span>
+          <span class="results-count-label">Sanctuaries match your criteria</span>
+          <div class="active-chips-container" id="active-chips-container">
+            <!-- Active filter chips injected via JavaScript -->
+          </div>
+        </div>
+
+        <div class="results-view-controls">
+          <div class="sort-control-group">
+            <label for="sort-select" class="sort-label">Sort by:</label>
+            <select id="sort-select" class="sort-select" aria-label="Sort dining options">
+              <option value="featured">Featured Curations</option>
+              <option value="rating_desc">Highest Rated (★ 5.0 - 1.0)</option>
+              <option value="reviews_desc">Most Reviewed</option>
+              <option value="price_asc">Price (Accessible to Splurge)</option>
+              <option value="price_desc">Price (Splurge to Accessible)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Restaurant Cards Grid (Scrolling Gallery) -->
+      <div class="dining-cards-grid" id="dining-cards-grid">
+        <!-- Cards dynamically injected via app.js -->
+      </div>
+
+      <!-- Empty state container when no results match -->
+      <div class="empty-state hidden" id="empty-state">
+        <div class="empty-state-icon">🍜</div>
+        <h3 class="empty-state-title">No Dining Sanctuaries Match Your Combination</h3>
+        <p class="empty-state-desc">Try loosening your tradition, cuisine, or age demographic filters to explore other culinary treasures.</p>
+        <button class="empty-state-btn" id="empty-state-reset-btn">Reset All Selections</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Deep Dive Restaurant Detail & Reservation Modal -->
+  <div class="modal-backdrop hidden" id="restaurant-modal" role="dialog" aria-modal="true" aria-labelledby="modal-restaurant-name">
+    <div class="modal-window">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close dialog">&times;</button>
+      <div class="modal-body-scroll" id="modal-content-area">
+        <!-- Dynamic content injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Alert -->
+  <div class="toast-notification hidden" id="toast-notification" role="alert" aria-live="polite">
+    <span class="toast-icon" id="toast-icon">✓</span>
+    <span class="toast-message" id="toast-message">Notification text</span>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="logo-mark">✧</span>
+        <span class="footer-title">GustoSphere</span>
+        <p class="footer-desc">Crafted with modern HTML5, Vanilla CSS, Vanilla JavaScript, and powered by a native C++ POSIX socket backend server.</p>
+      </div>
+      <div class="footer-meta">
+        <span class="footer-pill">C++17 Engine</span>
+        <span class="footer-pill">Pure CSS Glassmorphism</span>
+        <span class="footer-pill">Accessible Semantic HTML5</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
